@@ -9,7 +9,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/spacecode-art/atlas-platform.git
-    targetRevision: feat/p6-1-argocd
+    targetRevision: main
     path: gitops/apps
   destination:
     server: https://kubernetes.default.svc

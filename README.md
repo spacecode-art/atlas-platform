@@ -4,7 +4,7 @@
 > golden path, and a secrets pattern, built and tested on a local kind
 > cluster at zero cost.
 
-**Status: Phase 6 has started. P6-0 (the cluster) is done; P6-1 to P6-5 are
+**Status: Phase 6 has started. P6-0 (the cluster) and P6-1 (GitOps core) are done; P6-2 to P6-5 are
 not started.** A row changes only when its check has been run and the output
 is committed.
 
@@ -53,7 +53,7 @@ wrap the whole flow in one `atlas deploy app` command.
 | ID | Milestone | Check that proves it | Status |
 |---|---|---|---|
 | P6-0 | Foundation: repo, ADR-0001, cluster from one command | Cluster up, `kubectl get nodes` output committed | Done: 2 local runs, 116 s and 89 s ([evidence](docs/evidence/p6-0/)) |
-| P6-1 | GitOps core: ArgoCD with a root app syncing one workload | Application reports Synced and Healthy | Not started |
+| P6-1 | GitOps core: ArgoCD with a root app syncing one workload | Application reports Synced and Healthy | Done: root and `hello` Synced and Healthy; manual drift reverted within 10 s; one change applied through Git ([evidence](docs/evidence/p6-1/)) |
 | P6-2 | Generic Helm chart | `helm lint` and manifest validation pass in CI; sample app deploys | Not started |
 | P6-3 | Secrets pattern: Vault dev server and External Secrets | Secret reaches the pod; no value anywhere in Git | Not started |
 | P6-4 | Golden path: `atlas deploy app` | One timed end-to-end run, evidence committed | Not started |
@@ -69,6 +69,8 @@ Docker 29.9.3, kind 0.33.0 and kubectl 1.36.4 against Kubernetes v1.37.0.
 ```bash
 ./scripts/cluster-up.sh     # one control plane and two workers, ~1.5-2 min
 ./scripts/cluster-down.sh   # deletes only the atlas-platform cluster
+./scripts/argocd-up.sh      # Argo CD 3.6.1; pulls images first, can take minutes on a slow link
+kubectl --context kind-atlas-platform apply -f bootstrap/root-app.yaml   # the one manual GitOps step
 ```
 
 The script refuses to run if the cluster already exists. Measured on one
@@ -78,7 +80,7 @@ local machine; these are not cloud timings.
 
 ## Planned Architecture
 
-Intended design. Only the kind cluster exists so far. It changes as ADRs are
+Intended design. The kind cluster, Argo CD and the root app exist so far; the CLI, Vault and External Secrets do not. It changes as ADRs are
 written.
 
 ```mermaid
@@ -116,17 +118,22 @@ Directories are added when they have content. Today the repository holds:
 ```text
 .github/workflows/ci.yml     secrets scan
 cluster/kind-config.yaml     1 control plane, 2 workers, pinned node image
+bootstrap/                   Argo CD values and the root Application
+gitops/apps/                 one Application per workload
+gitops/workloads/            workload manifests (hello placeholder)
 scripts/cluster-up.sh        create the cluster and wait for Ready
 scripts/cluster-down.sh      delete the atlas-platform cluster
+scripts/argocd-up.sh         install Argo CD with preloaded images
 docs/adr/                    architecture decisions
 docs/evidence/p6-0/          P6-0 run output
+docs/evidence/p6-1/          P6-1 sync, self-heal and git-change output
 CHANGELOG.md
 CONTRIBUTING.md
 LICENSE
 README.md
 ```
 
-Planned, not yet created: `bootstrap/`, `gitops/`, `charts/`, `platform/`,
+Planned, not yet created: `charts/`, `platform/`,
 `cli/`, `examples/`, `tests/`, `measurements/`.
 
 ---
@@ -136,7 +143,7 @@ Planned, not yet created: `bootstrap/`, `gitops/`, `charts/`, `platform/`,
 | Area | Plan | Status |
 |---|---|---|
 | Cluster | kind | Decided in [ADR-0001](docs/adr/ADR-0001-local-kind-cluster-as-the-platform.md) |
-| GitOps | ArgoCD, app-of-apps | Planned, ADR pending |
+| GitOps | ArgoCD, app-of-apps | Decided in [ADR-0002](docs/adr/ADR-0002-argocd-via-pinned-helm-chart.md) and [ADR-0003](docs/adr/ADR-0003-app-of-apps-layout.md) |
 | Packaging | Helm, one generic chart | Planned, ADR pending |
 | Secrets | Vault dev server with External Secrets | Planned, ADR pending |
 | CLI | Node, with Bash for bootstrap steps | Planned, ADR pending |
@@ -157,6 +164,8 @@ first and is not part of the milestones above.
 ## Design Decisions (ADRs)
 
 - [ADR-0001: Local kind cluster as the platform](docs/adr/ADR-0001-local-kind-cluster-as-the-platform.md)
+- [ADR-0002: Install Argo CD from a pinned Helm chart](docs/adr/ADR-0002-argocd-via-pinned-helm-chart.md)
+- [ADR-0003: App-of-apps layout for GitOps](docs/adr/ADR-0003-app-of-apps-layout.md)
 
 ---
 
