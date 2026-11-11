@@ -63,21 +63,36 @@ wrap the whole flow in one `atlas deploy app` command.
 
 ## Planned Architecture
 
-```text
-  developer ── atlas deploy app ──▶ values committed to this repo
-                                              │
-                                              ▼
-                                   ArgoCD (in kind) watches Git
-                                              │
-                      ┌───────────────────────┼──────────────────────┐
-                      ▼                       ▼                      ▼
-              charts/atlas-app         platform services        secret references
-              (one generic chart)      (ingress, ESO, Vault)    (no values in Git)
+Intended design only; nothing here is built yet. It changes as ADRs are
+written.
+
+```mermaid
+graph TB
+    DEV[Operator]
+    GIT[("GitHub: atlas-platform<br/>charts/ and gitops/")]
+
+    subgraph "Single host (local machine)"
+        CLI["atlas deploy app<br/>(golden-path CLI)"]
+        VAULT[("Vault dev server<br/>in-memory; placement: ADR pending")]
+
+        subgraph "kind cluster: atlas-platform"
+            ARGO[ArgoCD]
+            ESO[External Secrets Operator]
+            subgraph "namespace: atlas-demo"
+                APP[atlas-demo-api pod]
+                SEC[Kubernetes Secret]
+            end
+        end
+    end
+
+    DEV --> CLI
+    CLI -->|"1. lint, render, commit values"| GIT
+    ARGO -->|"2. pull and compare"| GIT
+    ARGO -->|"3. sync Helm release"| APP
+    ESO -->|"read by reference"| VAULT
+    ESO -->|"create"| SEC
+    SEC -->|"mounted as env"| APP
 ```
-
-This is the intended design and may change as ADRs are written.
-
----
 
 ## Repository Structure
 
