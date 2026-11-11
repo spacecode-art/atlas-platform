@@ -1,0 +1,17 @@
+.env
+*.env.local
+*.tfstate*
+*.tfvars
+
+# Local cluster credentials and generated tokens must never be committed.
+kubeconfig*
+*.kubeconfig
+vault-keys*
+vault-token*
+
+# Recordings are linked from the README, not stored in git.
+*.mp4
+!docs/**/*.mp4
+
+# Archives can bypass .env ignore rules; distribute tracked files via git archive.
+*.zip
