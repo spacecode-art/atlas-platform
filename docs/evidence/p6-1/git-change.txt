@@ -1,0 +1,12 @@
+captured: 2026-11-11T11:52:03Z
+environment: local kind cluster on one host
+change: replicas 2 -> 3 in gitops/workloads/hello/deployment.yaml, pushed to git,
+        then argocd.argoproj.io/refresh=hard on the hello application
+result: a third pod appears with no kubectl change to the workload
+NAME    SYNC STATUS   HEALTH STATUS   REVISION                                   PROJECT
+hello   Synced        Healthy         c06165d57e9a228ac6a1daea46eb20ebd89ecac3   default
+root    Synced        Healthy         c06165d57e9a228ac6a1daea46eb20ebd89ecac3   default
+NAME                     READY   STATUS    RESTARTS   AGE     IP           NODE                     NOMINATED NODE   READINESS GATES
+hello-7d6c6b889d-5j4sn   1/1     Running   0          4m11s   10.244.1.5   atlas-platform-worker    <none>           <none>
+hello-7d6c6b889d-962tx   1/1     Running   0          4m11s   10.244.2.6   atlas-platform-worker2   <none>           <none>
+hello-7d6c6b889d-p2hfn   1/1     Running   0          98s     10.244.2.9   atlas-platform-worker2   <none>           <none>
