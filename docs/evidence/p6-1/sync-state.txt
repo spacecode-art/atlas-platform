@@ -1,0 +1,8 @@
+captured: 2026-11-11T11:49:12Z
+environment: local kind cluster on one host; Argo CD chart 10.17.2 (v3.6.1)
+NAME    SYNC STATUS   HEALTH STATUS   REVISION                                   PROJECT
+hello   Synced        Healthy         ca3b97ea5929ce704aa716c5c9c319e8bc7918c8   default
+root    Synced        Healthy         ca3b97ea5929ce704aa716c5c9c319e8bc7918c8   default
+NAME                     READY   STATUS    RESTARTS   AGE   IP           NODE                     NOMINATED NODE   READINESS GATES
+hello-7d6c6b889d-5j4sn   1/1     Running   0          81s   10.244.1.5   atlas-platform-worker    <none>           <none>
+hello-7d6c6b889d-962tx   1/1     Running   0          81s   10.244.2.6   atlas-platform-worker2   <none>           <none>

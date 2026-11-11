@@ -1,0 +1,10 @@
+captured: 2026-11-11T11:49:13Z
+environment: local kind cluster on one host
+git declares replicas: 2. manual drift: kubectl scale deployment hello --replicas=5
+deployment.apps/hello scaled
+t+10s spec.replicas=2
+t+20s spec.replicas=2
+t+30s spec.replicas=2
+t+40s spec.replicas=2
+t+50s spec.replicas=2
+t+60s spec.replicas=2
