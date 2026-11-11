@@ -4,9 +4,9 @@
 > golden path, and a secrets pattern, built and tested on a local kind
 > cluster at zero cost.
 
-**Status: Phase 6 has started. Nothing in this repository is implemented
-yet.** The milestone table below is the plan, and every row is "Not started".
-A row changes only when its check has been run and the output is committed.
+**Status: Phase 6 has started. P6-0 (the cluster) is done; P6-1 to P6-5 are
+not started.** A row changes only when its check has been run and the output
+is committed.
 
 ## Problem Statement
 
@@ -52,7 +52,7 @@ wrap the whole flow in one `atlas deploy app` command.
 
 | ID | Milestone | Check that proves it | Status |
 |---|---|---|---|
-| P6-0 | Foundation: repo, ADR-0001, cluster from one command | Cluster up, `kubectl get nodes` output committed | Not started |
+| P6-0 | Foundation: repo, ADR-0001, cluster from one command | Cluster up, `kubectl get nodes` output committed | Done: 2 local runs, 116 s and 89 s ([evidence](docs/evidence/p6-0/)) |
 | P6-1 | GitOps core: ArgoCD with a root app syncing one workload | Application reports Synced and Healthy | Not started |
 | P6-2 | Generic Helm chart | `helm lint` and manifest validation pass in CI; sample app deploys | Not started |
 | P6-3 | Secrets pattern: Vault dev server and External Secrets | Secret reaches the pod; no value anywhere in Git | Not started |
@@ -61,9 +61,24 @@ wrap the whole flow in one `atlas deploy app` command.
 
 ---
 
+## Run it
+
+Needs `docker`, `kind` and `kubectl` on the host. Built and tested with
+Docker 29.9.3, kind 0.33.0 and kubectl 1.36.4 against Kubernetes v1.37.0.
+
+```bash
+./scripts/cluster-up.sh     # one control plane and two workers, ~1.5-2 min
+./scripts/cluster-down.sh   # deletes only the atlas-platform cluster
+```
+
+The script refuses to run if the cluster already exists. Measured on one
+local machine; these are not cloud timings.
+
+---
+
 ## Planned Architecture
 
-Intended design only; nothing here is built yet. It changes as ADRs are
+Intended design. Only the kind cluster exists so far. It changes as ADRs are
 written.
 
 ```mermaid
@@ -100,15 +115,19 @@ Directories are added when they have content. Today the repository holds:
 
 ```text
 .github/workflows/ci.yml     secrets scan
+cluster/kind-config.yaml     1 control plane, 2 workers, pinned node image
+scripts/cluster-up.sh        create the cluster and wait for Ready
+scripts/cluster-down.sh      delete the atlas-platform cluster
 docs/adr/                    architecture decisions
+docs/evidence/p6-0/          P6-0 run output
 CHANGELOG.md
 CONTRIBUTING.md
 LICENSE
 README.md
 ```
 
-Planned, not yet created: `cluster/`, `bootstrap/`, `gitops/`, `charts/`,
-`platform/`, `cli/`, `examples/`, `scripts/`, `tests/`, `measurements/`.
+Planned, not yet created: `bootstrap/`, `gitops/`, `charts/`, `platform/`,
+`cli/`, `examples/`, `tests/`, `measurements/`.
 
 ---
 

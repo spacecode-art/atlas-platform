@@ -1,0 +1,14 @@
+NAMESPACE            NAME                                                   READY   STATUS    RESTARTS   AGE
+kube-system          coredns-559f6c778d-7dr2q                               1/1     Running   0          86s
+kube-system          coredns-559f6c778d-t49d4                               1/1     Running   0          86s
+kube-system          etcd-atlas-platform-control-plane                      1/1     Running   0          93s
+kube-system          kindnet-6nvrr                                          1/1     Running   0          82s
+kube-system          kindnet-j5xsp                                          1/1     Running   0          86s
+kube-system          kindnet-q4jx8                                          1/1     Running   0          82s
+kube-system          kube-apiserver-atlas-platform-control-plane            1/1     Running   0          93s
+kube-system          kube-controller-manager-atlas-platform-control-plane   1/1     Running   0          93s
+kube-system          kube-proxy-psflc                                       1/1     Running   0          82s
+kube-system          kube-proxy-rjx9t                                       1/1     Running   0          82s
+kube-system          kube-proxy-z9rfq                                       1/1     Running   0          86s
+kube-system          kube-scheduler-atlas-platform-control-plane            1/1     Running   0          93s
+local-path-storage   local-path-provisioner-75f7fc7dc5-9fbbs                1/1     Running   0          86s

@@ -1,0 +1,26 @@
+captured: 2026-11-11T09:40:11Z
+environment: local kind cluster on one host; not a cloud result
+Docker version 29.9.3, build 5457199
+kind version 0.33.0
+Client Version: v1.36.4
+Kustomize Version: v5.8.1
+v3.22.0+g144ca65
+node image: kindest/node:v1.37.0@sha256:a1ed56cfb0e7b93589bdf97c8cd566405a265939e3620fc4f5de89adff580ae5
+NAME                           STATUS   ROLES           AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE                       KERNEL-VERSION              CONTAINER-RUNTIME
+atlas-platform-control-plane   Ready    control-plane   13m   v1.37.0   172.21.0.4    <none>        Debian GNU/Linux 13 (trixie)   7.2.15+kali-amd64 (amd64)   containerd://2.3.4
+atlas-platform-worker          Ready    <none>          13m   v1.37.0   172.21.0.3    <none>        Debian GNU/Linux 13 (trixie)   7.2.15+kali-amd64 (amd64)   containerd://2.3.4
+atlas-platform-worker2         Ready    <none>          13m   v1.37.0   172.21.0.2    <none>        Debian GNU/Linux 13 (trixie)   7.2.15+kali-amd64 (amd64)   containerd://2.3.4
+NAMESPACE            NAME                                                   READY   STATUS    RESTARTS   AGE
+kube-system          coredns-559f6c778d-bthk4                               1/1     Running   0          13m
+kube-system          coredns-559f6c778d-kvhrk                               1/1     Running   0          13m
+kube-system          etcd-atlas-platform-control-plane                      1/1     Running   0          13m
+kube-system          kindnet-5ddsr                                          1/1     Running   0          13m
+kube-system          kindnet-fvqzc                                          1/1     Running   0          13m
+kube-system          kindnet-vvbnt                                          1/1     Running   0          13m
+kube-system          kube-apiserver-atlas-platform-control-plane            1/1     Running   0          13m
+kube-system          kube-controller-manager-atlas-platform-control-plane   1/1     Running   0          13m
+kube-system          kube-proxy-rqj4k                                       1/1     Running   0          13m
+kube-system          kube-proxy-v4drj                                       1/1     Running   0          13m
+kube-system          kube-proxy-z5c2h                                       1/1     Running   0          13m
+kube-system          kube-scheduler-atlas-platform-control-plane            1/1     Running   0          13m
+local-path-storage   local-path-provisioner-75f7fc7dc5-qvh6x                1/1     Running   0          13m
