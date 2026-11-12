@@ -26,6 +26,9 @@ follows [Keep a Changelog](https://keepachangelog.com/).
   filesystem; NetworkPolicy blocked ingress from another namespace and
   egress from the app, with controls reaching their targets. P6-2 done.
   Evidence in `docs/evidence/p6-2/`
+- `docs(adr)`: ADR-0007 to ADR-0009 for P6-3 (Vault dev server in the cluster,
+  Kubernetes auth for External Secrets, a script-based check that no secret
+  value is in Git), accepted before any build
 
 ### 2026-11-11
 
