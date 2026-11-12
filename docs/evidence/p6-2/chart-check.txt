@@ -1,0 +1,12 @@
+captured: 2026-11-12T08:16:35Z
+environment: local host; helm v3.22.0+g144ca65; kubeconform v0.7.0
+schema version: 1.37.0
+== default-values.yaml
+==> Linting /home/prime/Desktop/workspace/atlas-platform/charts/atlas-app
+[INFO] Chart.yaml: icon is recommended
+
+1 chart(s) linted, 0 chart(s) failed
+Summary: 5 resources found parsing stdin - Valid: 5, Invalid: 0, Errors: 0, Skipped: 0
+== negative tests
+ok: no image
+ok: empty ingressFrom

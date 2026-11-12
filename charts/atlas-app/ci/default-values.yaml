@@ -1,0 +1,5 @@
+# Used by scripts/chart-check.sh. The chart has no default image on purpose,
+# so lint and render need a values file. Lint does not check that the tag exists.
+image:
+  repository: nginxinc/nginx-unprivileged
+  tag: "1.31.4-alpine"

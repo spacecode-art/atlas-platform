@@ -1,0 +1,3 @@
+captured: 2026-11-12T08:16:34Z
+environment: local host; helm v3.22.0+g144ca65; render only, nothing deployed
+          image: "nginxinc/nginx-unprivileged@sha256:0000000000000000000000000000000000000000000000000000000000000000"
