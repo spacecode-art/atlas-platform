@@ -20,6 +20,12 @@ follows [Keep a Changelog](https://keepachangelog.com/).
   and pods running; with it, they were deleted. Removing the last app is
   blocked by Argo CD's empty-sync guard. ADR-0005, ADR-0006, ADR-0003
   corrected. Evidence in `docs/evidence/p6-1/`
+- `feat(gitops)`: `hello` now deploys from `charts/atlas-app` with inline
+  values; the plain manifests in `gitops/workloads/hello` are removed. One
+  run on the local kind cluster: pods run non-root with a read-only root
+  filesystem; NetworkPolicy blocked ingress from another namespace and
+  egress from the app, with controls reaching their targets. P6-2 done.
+  Evidence in `docs/evidence/p6-2/`
 
 ### 2026-11-11
 

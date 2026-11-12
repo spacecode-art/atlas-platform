@@ -1,0 +1,27 @@
+captured: 2026-11-12T09:58:26Z
+environment: local kind cluster on one host; Argo CD chart 10.17.2 (v3.6.1); charts/atlas-app 0.1.0; root synced to 2d05098465c7f7090448abf5fb238d86aeebd8b8
+NAME    SYNC STATUS   HEALTH STATUS
+hello   Synced        Healthy
+root    Synced        Healthy
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/hello   2/2     2            2           18m
+
+NAME                         READY   STATUS    RESTARTS   AGE
+pod/hello-867f44848f-pppwb   1/1     Running   0          4m9s
+pod/hello-867f44848f-wgp4j   1/1     Running   0          4m10s
+
+NAME            TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
+service/hello   ClusterIP   10.96.78.188   <none>        80/TCP    18m
+
+NAME                               MIN AVAILABLE   MAX UNAVAILABLE   ALLOWED DISRUPTIONS   AGE
+poddisruptionbudget.policy/hello   N/A             1                 1                     4m11s
+
+NAME                                    POD-SELECTOR                   AGE
+networkpolicy.networking.k8s.io/hello   app.kubernetes.io/name=hello   4m11s
+
+NAME                     AGE
+serviceaccount/default   22h
+serviceaccount/hello     4m11s
+--- pod securityContext, then container securityContext:
+{"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}}
+{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":true}

@@ -1,0 +1,26 @@
+captured: 2026-11-12T09:59:05Z
+environment: local kind cluster on one host (default kind CNI); chart atlas-app 0.1.0; one run each
+--- 1. control: client in hello namespace -> hello (expect REACHED)
+All commands and output from this session will be recorded in container logs, including credentials and sensitive information passed through the command prompt.
+If you don't see a command prompt, try pressing enter.
+REACHED
+pod "c-2960" deleted from hello namespace
+--- 2. ingress deny: client in probe namespace -> hello (expect BLOCKED if enforced)
+All commands and output from this session will be recorded in container logs, including credentials and sensitive information passed through the command prompt.
+If you don't see a command prompt, try pressing enter.
+wget: download timed out
+BLOCKED
+pod "c-29584" deleted from probe namespace
+--- 3. control: client in probe namespace -> target in probe (expect REACHED)
+REACHED
+All commands and output from this session will be recorded in container logs, including credentials and sensitive information passed through the command prompt.
+If you don't see a command prompt, try pressing enter.
+pod "c-240" deleted from probe namespace
+--- 4. egress deny: hello pod -> target in probe (expect DNS_OK then BLOCKED if enforced)
+DNS_OK
+BLOCKED
+--- 5. control (added after tests 1-4, same cluster state, captured 2026-11-12T10:00:59Z): client in hello namespace, not selected by the policy -> target in probe (expect REACHED)
+REACHED
+All commands and output from this session will be recorded in container logs, including credentials and sensitive information passed through the command prompt.
+If you don't see a command prompt, try pressing enter.
+pod "c-2960" deleted from hello namespace

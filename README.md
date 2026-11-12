@@ -4,8 +4,8 @@
 > golden path, and a secrets pattern, built and tested on a local kind
 > cluster at zero cost.
 
-**Status: Phase 6 has started. P6-0 (the cluster) and P6-1 (GitOps core) are done; P6-2 to P6-5 are
-not started.** A row changes only when its check has been run and the output
+**Status: Phase 6 has started. P6-0 (the cluster), P6-1 (GitOps core) and P6-2 (generic chart) are
+done; P6-3 to P6-5 are not started.** A row changes only when its check has been run and the output
 is committed.
 
 ## Problem Statement
@@ -54,7 +54,7 @@ wrap the whole flow in one `atlas deploy app` command.
 |---|---|---|---|
 | P6-0 | Foundation: repo, ADR-0001, cluster from one command | Cluster up, `kubectl get nodes` output committed | Done: 2 local runs, 116 s and 89 s ([evidence](docs/evidence/p6-0/)) |
 | P6-1 | GitOps core: ArgoCD with a root app syncing one workload | Application reports Synced and Healthy | Done: root and `hello` Synced and Healthy; manual drift reverted within 10 s; one change applied through Git ([evidence](docs/evidence/p6-1/)) |
-| P6-2 | Generic Helm chart | `helm lint` and manifest validation pass in CI; sample app deploys | Not started |
+| P6-2 | Generic Helm chart | `helm lint` and manifest validation pass in CI; sample app deploys | Done: `helm lint --strict` and kubeconform (schema 1.37.0) pass in CI with two guard tests; `hello` deploys from the chart; NetworkPolicy enforced on kind, 5 tests, one run ([evidence](docs/evidence/p6-2/)) |
 | P6-3 | Secrets pattern: Vault dev server and External Secrets | Secret reaches the pod; no value anywhere in Git | Not started |
 | P6-4 | Golden path: `atlas deploy app` | One timed end-to-end run, evidence committed | Not started |
 | P6-5 | Proof: recorded session | Recording linked; optional single EKS burst demo | Not started |
@@ -113,20 +113,24 @@ graph TB
 
 ## Repository Structure
 
+
 Directories are added when they have content. Today the repository holds:
 
 ```text
-.github/workflows/ci.yml     secrets scan
+.github/workflows/ci.yml     secrets scan and chart check
+.github/dependabot.yml       weekly updates for pinned actions
+charts/atlas-app/            the golden-path Helm chart
 cluster/kind-config.yaml     1 control plane, 2 workers, pinned node image
 bootstrap/                   Argo CD values and the root Application
 gitops/apps/                 one Application per workload
-gitops/workloads/            workload manifests (hello placeholder)
+scripts/chart-check.sh       helm lint, kubeconform and guard tests
 scripts/cluster-up.sh        create the cluster and wait for Ready
 scripts/cluster-down.sh      delete the atlas-platform cluster
 scripts/argocd-up.sh         install Argo CD with preloaded images
 docs/adr/                    architecture decisions
 docs/evidence/p6-0/          P6-0 run output
-docs/evidence/p6-1/          P6-1 sync, self-heal and git-change output
+docs/evidence/p6-1/          P6-1 sync, self-heal, git-change and prune output
+docs/evidence/p6-2/          P6-2 chart check, deploy and NetworkPolicy output
 CHANGELOG.md
 CONTRIBUTING.md
 LICENSE
@@ -176,14 +180,20 @@ first and is not part of the milestones above.
 
 [`.github/workflows/ci.yml`](.github/workflows/ci.yml) runs on every PR and
 push to `main`. Secrets scanning consumes `atlas-security`'s reusable
-`reusable-secrets-scan.yml` (pinned to `v1.0.4`). Chart linting and manifest
-validation will be added with P6-2.
+`reusable-secrets-scan.yml` (pinned to the commit behind `v1.0.4`). The
+`chart-check` job runs `scripts/chart-check.sh`: `helm lint --strict`,
+kubeconform validation of the rendered manifests, and two negative tests that
+the chart's guards still fail. Dependabot keeps action versions current.
 
 ---
 
 ## Security Review
 
 - Secrets scanning is enforced in CI on every PR.
+- The chart runs workloads non-root with a read-only root filesystem, no
+  added capabilities and a default-deny NetworkPolicy. Enforcement was tested
+  on the kind cluster, not assumed
+  ([evidence](docs/evidence/p6-2/networkpolicy-enforcement.txt)).
 - Secret values never appear in Git; only references do.
 - Vault in dev mode is in-memory with a fixed root token. It demonstrates a
   pattern and is not a model of production Vault.
