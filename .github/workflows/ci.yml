@@ -13,5 +13,36 @@ jobs:
     permissions:
       contents: read
       pull-requests: write
-    uses: spacecode-art/atlas-security/.github/workflows/reusable-secrets-scan.yml@v1.0.4
-    secrets: inherit
+    uses: spacecode-art/atlas-security/.github/workflows/reusable-secrets-scan.yml@66b21baa80d95ebab82ec32843a37fd2f7d1d291 # v1.0.4
+    secrets:
+      ingest-token: ${{ secrets.ATLAS_SECURITY_INGEST_TOKEN }}
+
+  chart-check:
+    name: Helm lint and manifest validation
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Install kubeconform (pinned, checksum verified)
+        env:
+          KUBECONFORM_VERSION: v0.7.0
+          KUBECONFORM_SHA256: c31518ddd122663b3f3aa874cfe8178cb0988de944f29c74a0b9260920d115d3
+        run: |
+          curl -fsSLO "https://github.com/yannh/kubeconform/releases/download/${KUBECONFORM_VERSION}/kubeconform-linux-amd64.tar.gz"
+          echo "${KUBECONFORM_SHA256}  kubeconform-linux-amd64.tar.gz" | sha256sum -c -
+          tar xzf kubeconform-linux-amd64.tar.gz kubeconform
+          sudo install -m 0755 kubeconform /usr/local/bin/kubeconform
+
+      - name: Record tool versions
+        run: |
+          helm version --short
+          kubeconform -v
+
+      - name: Chart check
+        run: ./scripts/chart-check.sh
