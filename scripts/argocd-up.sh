@@ -14,6 +14,10 @@ IMAGES=(
 )
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
+for tool in docker kind kubectl helm; do
+  command -v "$tool" >/dev/null || { echo "missing tool: $tool" >&2; exit 1; }
+done
+
 kubectl --context "$CTX" cluster-info >/dev/null \
   || { echo "cluster not reachable; run scripts/cluster-up.sh first" >&2; exit 1; }
 
