@@ -1,0 +1,8 @@
+captured: 2026-11-12T09:11:29Z
+environment: local kind cluster on one host; Argo CD chart 10.17.2 (v3.6.1)
+state: root synced to d59d83a19425eb4fe1e704b9356b32fb709e38ef; gitops/apps holds only .gitkeep (hello.yaml removed); root has prune and selfHeal on, allowEmpty unset
+NAME    SYNC STATUS   HEALTH STATUS
+hello   Synced        Healthy
+root    OutOfSync     Healthy
+--- lines mentioning wipe/empty in root's full status:
+      auto-sync will wipe out all resources'
