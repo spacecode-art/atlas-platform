@@ -32,7 +32,9 @@ the existing `hello` selector survives the move to the chart.
 ## Boundaries and evidence
 `helm lint` and schema validation prove the manifests are well formed, not
 that they are safe or enforced. A NetworkPolicy protects nothing unless the
-CNI enforces it, so P6-2 includes a deny test on this cluster; if kind's CNI
-does not enforce it, that becomes a finding and its own ADR. The chart is a
+CNI enforces it, so P6-2 includes a deny test on this cluster. Result, one run
+on kind's default CNI: ingress from another namespace and egress from the app
+were both blocked, with controls reaching their targets
+(`docs/evidence/p6-2/networkpolicy-enforcement.txt`). The chart is a
 convention. Enforcement (Pod Security Admission, admission policy) is not
 part of this milestone.
