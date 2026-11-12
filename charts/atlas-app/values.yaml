@@ -1,0 +1,41 @@
+replicaCount: 2
+
+image:
+  repository: ""   # required
+  tag: ""          # required unless digest is set
+  digest: ""       # sha256:...; wins over tag when set
+  pullPolicy: IfNotPresent
+
+containerPort: 8080   # non-root images cannot bind port 80
+
+service:
+  port: 80
+
+probes:
+  path: /
+
+# Memory limit set, CPU limit deliberately not: CPU limits throttle.
+resources:
+  requests:
+    cpu: 10m
+    memory: 16Mi
+  limits:
+    memory: 64Mi
+
+podSecurityContext:
+  runAsNonRoot: true
+  seccompProfile:
+    type: RuntimeDefault
+
+securityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  capabilities:
+    drop:
+      - ALL
+
+networkPolicy:
+  # Must not be empty: an empty `from` allows every source (the template fails on it).
+  ingressFrom:
+    - podSelector: {}
+  extraEgress: []

@@ -1,0 +1,5 @@
+captured: 2026-11-12T08:16:34Z
+environment: local host; helm v3.22.0+g144ca65; render only, nothing deployed
+Error: execution error at (atlas-app/templates/deployment.yaml:30:20): image.repository is required
+
+Use --debug flag to render out invalid YAML

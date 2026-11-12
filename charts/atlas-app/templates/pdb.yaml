@@ -1,0 +1,13 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "atlas-app.name" . }}
+  labels:
+    {{- include "atlas-app.labels" . | nindent 4 }}
+spec:
+  # maxUnavailable, not minAvailable: with one replica, minAvailable: 1
+  # would block every node drain.
+  maxUnavailable: 1
+  selector:
+    matchLabels:
+      {{- include "atlas-app.selectorLabels" . | nindent 6 }}
