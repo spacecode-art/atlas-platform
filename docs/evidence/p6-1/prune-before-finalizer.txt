@@ -1,0 +1,26 @@
+captured: 2026-11-12T09:34:56Z
+environment: local kind cluster on one host; Argo CD chart 10.17.2 (v3.6.1)
+baseline: hello running normally, gitops/apps/hello.yaml present on main
+NAME    SYNC STATUS   HEALTH STATUS
+hello   Synced        Healthy
+root    Synced        Healthy
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/hello   2/2     2            2           21h
+
+NAME                         READY   STATUS    RESTARTS      AGE
+pod/hello-7d6c6b889d-5j4sn   1/1     Running   1 (21h ago)   21h
+pod/hello-7d6c6b889d-962tx   1/1     Running   1 (21h ago)   21h
+captured: 2026-11-12T09:35:32Z
+environment: local kind cluster on one host; Argo CD chart 10.17.2 (v3.6.1)
+state: hello Application has NO resources finalizer; hello.yaml removed and sibling.yaml added on test/prune-hello-sibling-2 (root stays non-empty); root synced to c1621a1332130d26ca81a8c6cea160af4e560e19
+NAME      SYNC STATUS   HEALTH STATUS
+root      Synced        Healthy
+sibling   Synced        Healthy
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/hello   2/2     2            2           21h
+
+NAME                         READY   STATUS    RESTARTS      AGE
+pod/hello-7d6c6b889d-5j4sn   1/1     Running   1 (21h ago)   21h
+pod/hello-7d6c6b889d-962tx   1/1     Running   1 (21h ago)   21h
+captured: 2026-11-12T09:37:12Z (after the run above; hello restored from main, same spec as during the test)
+live hello Application finalizers: []

@@ -1,0 +1,19 @@
+captured: 2026-11-12T09:38:58Z
+environment: local kind cluster on one host; Argo CD chart 10.17.2 (v3.6.1)
+baseline: hello has the finalizer, live: ["resources-finalizer.argocd.argoproj.io"]
+NAME    SYNC STATUS   HEALTH STATUS
+hello   Synced        Healthy
+root    Synced        Healthy
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/hello   2/2     2            2           21h
+
+NAME                         READY   STATUS    RESTARTS      AGE
+pod/hello-7d6c6b889d-5j4sn   1/1     Running   1 (21h ago)   21h
+pod/hello-7d6c6b889d-962tx   1/1     Running   1 (21h ago)   21h
+captured: 2026-11-12T09:39:33Z
+environment: local kind cluster on one host; Argo CD chart 10.17.2 (v3.6.1)
+state: hello Application HAS the resources finalizer; hello.yaml removed, sibling.yaml added on test/prune-hello-after; root synced to 8bb72391ba1e660b23ddc7c291dcdbd6f7235fa3
+NAME      SYNC STATUS   HEALTH STATUS
+root      Synced        Healthy
+sibling   Synced        Healthy
+No resources found in hello namespace.
