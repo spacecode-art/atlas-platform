@@ -144,7 +144,7 @@ Planned, not yet created: `charts/`, `platform/`,
 |---|---|---|
 | Cluster | kind | Decided in [ADR-0001](docs/adr/ADR-0001-local-kind-cluster-as-the-platform.md) |
 | GitOps | ArgoCD, app-of-apps | Decided in [ADR-0002](docs/adr/ADR-0002-argocd-via-pinned-helm-chart.md) and [ADR-0003](docs/adr/ADR-0003-app-of-apps-layout.md) |
-| Packaging | Helm, one generic chart | Planned, ADR pending |
+| Packaging | Helm, one generic chart | Decided in [ADR-0004](docs/adr/ADR-0004-one-generic-helm-chart-as-the-golden-path.md) |
 | Secrets | Vault dev server with External Secrets | Planned, ADR pending |
 | CLI | Node, with Bash for bootstrap steps | Planned, ADR pending |
 
@@ -166,6 +166,9 @@ first and is not part of the milestones above.
 - [ADR-0001: Local kind cluster as the platform](docs/adr/ADR-0001-local-kind-cluster-as-the-platform.md)
 - [ADR-0002: Install Argo CD from a pinned Helm chart](docs/adr/ADR-0002-argocd-via-pinned-helm-chart.md)
 - [ADR-0003: App-of-apps layout for GitOps](docs/adr/ADR-0003-app-of-apps-layout.md)
+- [ADR-0004: One generic Helm chart as the golden path](docs/adr/ADR-0004-one-generic-helm-chart-as-the-golden-path.md)
+- [ADR-0005: Child Applications carry the resources finalizer](docs/adr/ADR-0005-child-applications-carry-the-resources-finalizer.md)
+- [ADR-0006: Keep Argo CD's empty-sync guard on the root Application](docs/adr/ADR-0006-keep-argo-cds-empty-sync-guard-on-root.md)
 
 ---
 

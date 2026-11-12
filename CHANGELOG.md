@@ -5,6 +5,22 @@ follows [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+### 2026-11-12
+
+- `feat(chart)`: `charts/atlas-app` 0.1.0 (non-root, read-only root
+  filesystem, resource limits, PodDisruptionBudget, default-deny
+  NetworkPolicy), ADR-0004. `scripts/chart-check.sh` runs helm lint,
+  kubeconform (schema 1.37.0) and two negative tests; evidence in
+  `docs/evidence/p6-2/`. Not deployed yet: `hello` still runs from plain
+  manifests
+- `ci`: secrets scan pinned to a commit SHA, `chart-check` job, Dependabot
+  for actions
+- `fix(gitops)`: resources finalizer on the `hello` Application. Prune test,
+  one run each: without it, removing the app from Git left its Deployment
+  and pods running; with it, they were deleted. Removing the last app is
+  blocked by Argo CD's empty-sync guard. ADR-0005, ADR-0006, ADR-0003
+  corrected. Evidence in `docs/evidence/p6-1/`
+
 ### 2026-11-11
 
 - `docs`: repository started for Phase 6 (Platform Engineering): README,
