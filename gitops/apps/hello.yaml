@@ -10,7 +10,12 @@ spec:
   source:
     repoURL: https://github.com/spacecode-art/atlas-platform.git
     targetRevision: main
-    path: gitops/workloads/hello
+    path: charts/atlas-app
+    helm:
+      valuesObject:
+        image:
+          repository: nginxinc/nginx-unprivileged
+          tag: "1.31.4-alpine"
   destination:
     server: https://kubernetes.default.svc
     namespace: hello
