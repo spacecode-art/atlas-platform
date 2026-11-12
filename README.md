@@ -149,7 +149,7 @@ Planned, not yet created: `charts/`, `platform/`,
 | Cluster | kind | Decided in [ADR-0001](docs/adr/ADR-0001-local-kind-cluster-as-the-platform.md) |
 | GitOps | ArgoCD, app-of-apps | Decided in [ADR-0002](docs/adr/ADR-0002-argocd-via-pinned-helm-chart.md) and [ADR-0003](docs/adr/ADR-0003-app-of-apps-layout.md) |
 | Packaging | Helm, one generic chart | Decided in [ADR-0004](docs/adr/ADR-0004-one-generic-helm-chart-as-the-golden-path.md) |
-| Secrets | Vault dev server with External Secrets | Planned, ADR pending |
+| Secrets | Vault dev server with External Secrets | Decided in [ADR-0007](docs/adr/ADR-0007-vault-dev-server-in-the-cluster-deployed-by-argo-cd.md), [ADR-0008](docs/adr/ADR-0008-external-secrets-authenticates-with-kubernetes-auth.md) and [ADR-0009](docs/adr/ADR-0009-prove-no-secret-value-in-git-with-a-script.md) |
 | CLI | Node, with Bash for bootstrap steps | Planned, ADR pending |
 
 Tool versions are pinned when each component is first built, and recorded in
@@ -173,6 +173,9 @@ first and is not part of the milestones above.
 - [ADR-0004: One generic Helm chart as the golden path](docs/adr/ADR-0004-one-generic-helm-chart-as-the-golden-path.md)
 - [ADR-0005: Child Applications carry the resources finalizer](docs/adr/ADR-0005-child-applications-carry-the-resources-finalizer.md)
 - [ADR-0006: Keep Argo CD's empty-sync guard on the root Application](docs/adr/ADR-0006-keep-argo-cds-empty-sync-guard-on-root.md)
+- [ADR-0007: Vault dev server in the cluster, deployed by Argo CD](docs/adr/ADR-0007-vault-dev-server-in-the-cluster-deployed-by-argo-cd.md)
+- [ADR-0008: External Secrets authenticates to Vault with Kubernetes auth](docs/adr/ADR-0008-external-secrets-authenticates-with-kubernetes-auth.md)
+- [ADR-0009: Prove "no secret value in Git" with a script that never prints the value](docs/adr/ADR-0009-prove-no-secret-value-in-git-with-a-script.md)
 
 ---
 
