@@ -22,3 +22,17 @@ wait_rev() {
   k -n argocd get application root -o jsonpath='{.status.conditions[*].message}'; echo
   return 1
 }
+# Wait up to 5 minutes for a child Application to be Synced and Healthy.
+# wait_rev only proves root has the commit; children sync on their own.
+wait_app() {
+  local s h i
+  for i in $(seq 1 60); do
+    s=$(k -n argocd get application "$1" -o jsonpath='{.status.sync.status}' 2>/dev/null)
+    h=$(k -n argocd get application "$1" -o jsonpath='{.status.health.status}' 2>/dev/null)
+    [ "$s" = "Synced" ] && [ "$h" = "Healthy" ] && return 0
+    sleep 5
+  done
+  echo "$1 not ready; sync='$s' health='$h'" >&2
+  k -n argocd get application "$1" -o jsonpath='{.status.conditions[*].message}'; echo
+  return 1
+}
